@@ -1,0 +1,58 @@
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script>
+// http://meta.stackexchange.com/questions/272956/a-new-code-license-the-mit-this-time-with-attribution-required?cb=1
+// http://stackoverflow.com/a/5624139
+function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+
+function contrastColor(color)
+{
+    var d = 0;
+
+    // Counting the perceptive luminance - human eye favors green color...
+    // double a = 1 - ( 0.299 * color.R + 0.587 * color.G + 0.114 * color.B)/255;
+
+    var red = hexToRgb(color).r;
+    var green = hexToRgb(color).g;
+    var blue = hexToRgb(color).b;
+
+
+    if ((1 - ( 0.299 * red + 0.587 * green + 0.114 * blue)/255) < 0.5)
+       d = "#000"; // bright colors - black font
+    else
+       d = "#fff"; // dark colors - white font
+
+    return  d;
+}
+
+
+
+var fg_colors = new Array("#6C6","#CF9","#093","#300","#63F","#090","#990","#666","#FF6","#999","#3F3","#09C","#C69","#609","#939","#0FC","#993","#F36","#6CF","#66F","#C36","#9FC","#600","#CC3","#0CC","#906","#0F3","#369","#903","#9C6","#606","#630","#30F","#69F","#0F0","#960","#030","#C33","#F9F","#F0C","#009","#396","#096","#69C","#366","#399","#309","#0F6","#C03","#F93","#6F0","#CC9","#036","#3C0","#F9C","#06C","#9F3","#06F","#3F9","#C66","#F60","#96F","#6F6","#C9C","#3CF","#6F9","#C3F","#636","#9F6","#C6F","#F90","#FCF","#063","#6FF","#639","#663","#CFC","#909","#99F","#966","#F09","#996","#30C","#C99","#033","#633","#F0F","#3C6","#C39","#963","#9C9","#09F","#FF0","#CCF","#C60","#900","#699","#930","#003","#333","#6F3","#9F9","#000","#099","#F66","#3F6","#F69","#00C","#360","#3F0","#CC0","#90C","#6FC","#9CF","#F63","#0C3","#FCC","#F00","#C0F","#F06","#FC6","#F6C","#CF0","#3C9","#933","#03C","#006","#60F","#306","#39C","#C63","#363","#33C","#C93","#93C","#603","#330","#C96","#6C9","#6C0","#F30","#93F","#39F","#00F","#C3C","#FC3","#C06","#90F","#9CC","#390","#0CF","#0C6","#CCC","#3C3","#F39","#FF9","#9FF","#936","#690","#CF3","#33F","#669","#393","#C9F","#F6F","#3CC","#969","#F03","#99C","#CC6","#C6C","#63C","#C0C","#069","#66C","#36C","#C09","#039","#696","#066","#0C9","#60C","#6CC","#36F","#660","#C90","#339","#CF6","#693","#CFF","#3FC","#9C3","#F99","#C30","#FC9","#9C0","#C00","#FC0","#0C0","#6C3","#FFC","#9F0","#F3F","#FF3","#F33","#03F","#3FF","#96C","#FFF","#336","#F96","#303","#0F9","#060","#F3C","#0FF");
+var cats = new Array();
+$('.categories').each(function(){
+  var val = $(this).text();
+  if (cats.indexOf(val) == -1)
+  {
+    cats.push(val);
+  }
+  var fg_color = fg_colors[cats.indexOf(val)];
+  $(this).css("color",fg_color);
+  $(this).css("background-color",contrastColor(fg_color));
+});
+</script>

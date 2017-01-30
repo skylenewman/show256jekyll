@@ -1,0 +1,33 @@
+---
+layout: default
+---
+<h1>{{ page.title }}</h1>
+<!-- Look the author details up from the site config. -->
+{% assign author = site.data.authors[page.author] %}
+
+<!-- Output author details if some exist. -->
+{% if author %}
+    <p class="subdued">
+        <!-- Personal Info. -->
+        Written by <a href="{{ author.web }}" target="_blank">{{ author.name }}</a>
+        {% if author.twitter %}
+          <a href="https://twitter.com/{{ author.twitter }}" target="_blank"><i class="fa fa-twitter-square">&nbsp;</i></a>
+        {% endif %}
+        {% if author.linkedin %}
+          <a href="https://www.linkedin.com/in/{{ author.linkedin }}" target="_blank"><i class="fa fa-linkedin-square">&nbsp;</i></a>
+        {% endif %}
+        {% if author.github %}
+          <a href="https://github.com/{{ author.github }}" target="_blank"><i class="fa fa-github-square">&nbsp;</i></a>
+        {% endif %}
+    </p>
+
+{% endif %}
+
+{{ content }}
+
+<p class="subdued">Read more about
+{% for category in page.categories %}
+  <!-- The next snippet will go here... -->
+   <a href="{{site.url}}/{{category}}">{{ category }}</a>
+{% endfor %}
+</p>
